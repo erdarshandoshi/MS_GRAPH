@@ -20,5 +20,12 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-es2015": "^6.24.1"
+  },
+  "dependencies": {
+    "@microsoft/microsoft-graph-client": "^2.0.0",
+    "isomorphic-fetch": "^2.2.1",
+    "qs": "^6.9.4",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5"
   }
 }
