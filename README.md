@@ -77,7 +77,7 @@ if (!!user) {
 
 ```
 
-Method Name : getAllUserDetails - Used to fetch All User Details fomr Active Directory
+Method Name : getAllUserDetails - Used to fetch All User Details from Active Directory
 
 ```javascript
 var GraphAPI = require('ms-graph-function');
