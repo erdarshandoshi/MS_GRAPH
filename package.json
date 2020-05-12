@@ -1,16 +1,20 @@
 {
-  "name": "test",
-  "version": "1.0.0",
-  "description": "",
+  "name": "ms-graph-function",
+  "version": "1.0.2",
+  "description": "Node.js package for making Azure Active Directory Graph API calls",
   "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erdarshandoshi/MS_GRAPH"
+  },
   "scripts": {
     "start": "node lib/index.js",
     "build": "babel src --out-dir lib",
     "prepublish": "babel src --out-dir lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Darshan Doshi",
+  "license": "MIT",
   "babel": {
     "presets": [
       "es2015"

@@ -47,29 +47,40 @@ async function getAllGroupDetails(accessToken) {
 }
 
 //CODE TO GET ALL USERS FROM AD GROUP
-async function getAllUserDetails(accessToken) {
-    if (!!accessToken) {
-        try {
-            let url = '/users';
-            const allResults = [];
-            do {
-                const user = await getuserlist(accessToken, url);
-                url = user.users['@odata.nextLink'];
-                allResults.push(user);
-            } while (url)
-            // return allResults;
+// async function getAllUserDetails(accessToken) {
+//     if (!!accessToken) {
+//         try {
+//             let url = '/users';
+//             const allResults = [];
+//             do {
+//                 const user = await getuserlist(accessToken, url);
+//                 url = user.users['@odata.nextLink'];
+//                 allResults.push(user);
+//             } while (url)
+//             // return allResults;
 
-            console.log('user list==>');
-            console.log(allResults);
-
-        } catch (err) {
-            return { users: null, errorMessage: err.message };
-        }
-    } else {
-        return { users: null, errorMessage: "accessToken are missing." };
-    }
-}
-async function getuserlist(accessToken, url) {
+//         } catch (err) {
+//             return { users: null, errorMessage: err.message };
+//         }
+//     } else {
+//         return { users: null, errorMessage: "accessToken are missing." };
+//     }
+// }
+// async function getuserlist(accessToken, url) {
+//     if (!!accessToken) {
+//         try {
+//             const client = getAuthenticatedClient(accessToken);
+//             const users = await client.api(url).get();
+//             return { users: users, errorMessage: null };
+//         } catch (err) {
+//             return { users: null, errorMessage: err.message };
+//         }
+//     } else {
+//         return { users: null, errorMessage: "accessToken are missing." };
+//     }
+// }
+//CODE TO GET ALL USERS FROM AD GROUP
+async function getAllUserDetails(accessToken, url = '/users') {
     if (!!accessToken) {
         try {
             const client = getAuthenticatedClient(accessToken);
@@ -82,14 +93,20 @@ async function getuserlist(accessToken, url) {
         return { users: null, errorMessage: "accessToken are missing." };
     }
 }
-//CODE TO GET SINGLE USER FROM AD GROUP
+
+//CODE TO GET SPECIFIC USER FROM AD GROUP
 async function getSingleUserDetails(accessToken, userID) {
     if (!!userID && !!accessToken) {
         try {
-            const url = '/users/' + userID;
             const client = getAuthenticatedClient(accessToken);
-            const users = await client.api(url).get();
-            return { user: users, errorMessage: null };
+            const users = userID.split(',');
+            const arrayOfPromises = users.map(userID => {
+                return client.api(`/users/${userID}`).get()
+            })
+            return Promise.all(arrayOfPromises).then((result) => {
+                const filteredResult = result.reduce((acc, { value }) => [...acc, ...value], [])
+                return { user: filteredResult, errorMessage: null };
+            });
         } catch (err) {
             return { user: null, errorMessage: err.message };
         }
@@ -130,7 +147,6 @@ async function getMembersFromGroup(accessToken, groupId) {
             const arrayOfPromises = groups.map(item => {
                 return client.api(`/groups/${item}/transitiveMembers`).get()
             })
-            //return Promise.all(arrayOfPromises)
             return Promise.all(arrayOfPromises).then((result) => {
                 const filteredResult = result.reduce((acc, { value }) => [...acc, ...value], [])
                 return { groupMembers: filteredResult, error: null };
