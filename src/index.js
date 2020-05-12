@@ -32,11 +32,11 @@ async function getAccessToken(appID, graphScope, clientSecret, tokenEndPoint) {
     }
 }
 //CODE TO GET ALL GROUPS FROM AD GROUP
-async function getAllGroupDetails(accessToken) {
-    if (!!accessToken) {
+async function getAllGroupDetails(accessToken, url = '/groups') {
+    if (!!accessToken && !!url) {
         try {
             const client = getAuthenticatedClient(accessToken);
-            const groups = await client.api('/groups').get();
+            const groups = await client.api(url).get();
             return { groups: groups, errorMessage: null };
         } catch (err) {
             return { groups: null, errorMessage: err.message };
@@ -81,7 +81,7 @@ async function getAllGroupDetails(accessToken) {
 // }
 //CODE TO GET ALL USERS FROM AD GROUP
 async function getAllUserDetails(accessToken, url = '/users') {
-    if (!!accessToken) {
+    if (!!accessToken && !!url) {
         try {
             const client = getAuthenticatedClient(accessToken);
             const users = await client.api(url).get();
