@@ -104,8 +104,7 @@ async function getSelectedUserDetails(accessToken, userID) {
                 return client.api(`/users/${item}`).get()
             })
             return Promise.all(arrayOfPromises).then((result) => {
-                const filteredResult = result.reduce((acc, { value }) => [...acc, ...value], [])
-                return { user: filteredResult, errorMessage: null };
+                return { user: result, errorMessage: null };
             });
         } catch (err) {
             return { user: null, errorMessage: err.message };
