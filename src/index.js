@@ -95,13 +95,13 @@ async function getAllUserDetails(accessToken, url = '/users') {
 }
 
 //CODE TO GET SPECIFIC USER FROM AD GROUP
-async function getSingleUserDetails(accessToken, userID) {
+async function getSelectedUserDetails(accessToken, userID) {
     if (!!userID && !!accessToken) {
         try {
             const client = getAuthenticatedClient(accessToken);
             const users = userID.split(',');
-            const arrayOfPromises = users.map(userID => {
-                return client.api(`/users/${userID}`).get()
+            const arrayOfPromises = users.map(item => {
+                return client.api(`/users/${item}`).get()
             })
             return Promise.all(arrayOfPromises).then((result) => {
                 const filteredResult = result.reduce((acc, { value }) => [...acc, ...value], [])
@@ -164,6 +164,6 @@ module.exports = {
     getAllGroupDetails,
     getMembersFromGroup,
     getAllUserDetails,
-    getSingleUserDetails,
+    getSelectedUserDetails,
     getAccessToken,
 };
