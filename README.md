@@ -33,6 +33,7 @@ Register your application to use Microsoft Graph API using one of the following 
 | `MS_GRAPH_SCOPE`            | **Yes**   | https://graph.microsoft.com/.default |             
 | `APPSECRET`            | **Yes**   | A secret string that the application uses to prove its identity when requesting a token. Copy the value of key which you have generated during **Getting Started** section |             
 | `TOKEN_ENDPOINT`            | **Yes**   | https://login.microsoftonline.com/[COPIED_TENANT_ID]/oauth2/v2.0/token|          
+| `GRAPH_API_VERSION`            | **No**   | Default value of graph API Version is 1.0. If you want to fetch data from beta version of graph API, mention value='beta'|          
 
 ### 3. Usage
 
@@ -58,6 +59,7 @@ var GraphAPI = require('ms-graph-function');
 
 // The ACCESSTOKEN  are usually in a configuration file.
 // GROUPID is the name of Active Directory Groups from which you want to fetch member details
+// GRAPH_API_VERSION is non mandatory parameter by default it will fetch details from v1.0 of Microsoft Graph API
 const { groupMembers, errorMessage } = await GraphAPI.getMembersFromGroup(ACCESSTOKEN, GROUPID);
 
 if (!!groupMembers) {
@@ -74,6 +76,7 @@ var GraphAPI = require('ms-graph-function');
 
 // The ACCESSTOKEN  are usually in a configuration file.
 // URL is optional field. By Default value of URL wil be '/groups'
+// GRAPH_API_VERSION is non mandatory parameter by default it will fetch details from v1.0 of Microsoft Graph API
 const { groups, errorMessage } = await GraphAPI.getAllGroupDetails(ACCESSTOKEN, URL);
 
 if (!!groups) {
@@ -90,7 +93,8 @@ if (!!groups) {
 var GraphAPI = require('ms-graph-function');
 
 // The ACCESSTOKEN  are usually in a configuration file.
-// userID fied will be comma seprated values of userid of whose details we want to fetch
+// userID field will be comma seprated values of userid of whose details we want to fetch
+// GRAPH_API_VERSION is non mandatory parameter by default it will fetch details from v1.0 of Microsoft Graph API
 const { user, errorMessage } = await GraphAPI.getSelectedUserDetails(ACCESSTOKEN, userID);
 
 if (!!user) {
@@ -108,6 +112,7 @@ var GraphAPI = require('ms-graph-function');
 
 // The ACCESSTOKEN  are usually in a configuration file.
 // URL is optional field. By Default value of URL wil be '/users'
+// GRAPH_API_VERSION is non mandatory parameter by default it will fetch details from v1.0 of Microsoft Graph API
 const { users, errorMessage } = await GraphAPI.getAllUserDetails(ACCESSTOKEN, URL);
 
 if (!!users) {
