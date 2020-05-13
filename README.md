@@ -10,9 +10,33 @@ v1.0.7
 npm install ms-graph-function --save
 ```
 
-### Methods
 
-Method Name : getAccessToken - Used to fetch Access Token from Graph API
+## Getting started
+
+### 1. Register your application
+
+Register your application to use Microsoft Graph API using one of the following supported authentication portals:
+
+-   [Microsoft Application Registration Portal](https://apps.dev.microsoft.com): Register a new application that works with Microsoft Accounts and/or organizational accounts using the unified V2 Authentication Endpoint.
+-   [Microsoft Azure Active Directory](https://manage.windowsazure.com): Register a new application in your tenant's Active Directory to support work or school users for your tenant or multiple tenants.
+-   Allow permissions to the application for accessing Microsoft Graph.
+-   Using an admin account consent on behalf of their organization
+-   Create a password (a key) for the app by navigating into Certificates & Secrets of the corresponding app inside App Registration
+
+
+
+### 2. Usage
+
+| Environment Variable   | Required? | Value                            |
+| ---------------------- | --------- | -----------------------------------      |
+| `APPID`            | **Yes**   | It refers to Application (Client) Id of the registered application  |  
+| `MS_GRAPH_SCOPE`            | **Yes**   | https://graph.microsoft.com/.default |             
+| `APPSECRET`            | **Yes**   | A secret string that the application uses to prove its identity when requesting a token. Copy the value of key which you have generated during **Getting Started** section |             
+| `TOKEN_ENDPOINT`            | **Yes**   | https://login.microsoftonline.com/[COPIED_TENANT_ID]/oauth2/v2.0/token|          
+
+### 3. Usage
+
+***Method Name : getAccessToken*** - Used to fetch Access Token from Graph API
 
 ```javascript
 var GraphAPI = require('ms-graph-function');
@@ -27,7 +51,7 @@ if (!!result) {
 }
 
 ```
-Method Name : getMembersFromGroup - Used to fetch Active Directory Group Member details from multiple AD Groups
+***Method Name : getMembersFromGroup*** - Used to fetch Active Directory Group Member details from multiple AD Groups
 
 ```javascript
 var GraphAPI = require('ms-graph-function');
@@ -43,7 +67,7 @@ if (!!groupMembers) {
 }
 ```
 
-Method Name : getAllGroupDetails - Used to fetch all Active Directory Group Details
+***Method Name : getAllGroupDetails*** - Used to fetch all Active Directory Group Details
 
 ```javascript
 var GraphAPI = require('ms-graph-function');
@@ -60,7 +84,7 @@ if (!!groups) {
 
 ```
 
-Method Name : getSelectedUserDetails - Used to fetch Selected User Details
+***Method Name : getSelectedUserDetails*** - Used to fetch Selected User Details
 
 ```javascript
 var GraphAPI = require('ms-graph-function');
@@ -77,7 +101,7 @@ if (!!user) {
 
 ```
 
-Method Name : getAllUserDetails - Used to fetch All User Details from Active Directory
+***Method Name : getAllUserDetails*** - Used to fetch All User Details from Active Directory
 
 ```javascript
 var GraphAPI = require('ms-graph-function');
@@ -94,8 +118,8 @@ if (!!users) {
 
 ```
 
-## Contributing
+### 4. Usage Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-## License
+### 5. Usage Contributing
 [MIT](https://choosealicense.com/licenses/mit/)
