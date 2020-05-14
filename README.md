@@ -27,13 +27,17 @@ Register your application to use Microsoft Graph API using one of the following 
 
 ### 2. Usage
 
+
+
 | Environment Variable   | Required? | Value                            |
 | ---------------------- | --------- | -----------------------------------      |
 | `APPID`            | **Yes**   | It refers to Application (Client) Id of the registered application  |  
 | `MS_GRAPH_SCOPE`            | **Yes**   | https://graph.microsoft.com/.default |             
 | `APPSECRET`            | **Yes**   | A secret string that the application uses to prove its identity when requesting a token. Copy the value of key which you have generated during **Getting Started** section |             
 | `TOKEN_ENDPOINT`            | **Yes**   | https://login.microsoftonline.com/[COPIED_TENANT_ID]/oauth2/v2.0/token|          
-| `GRAPH_API_VERSION`            | **No**   | Default value of graph API Version is 1.0. If you want to fetch data from beta version of graph API, mention value='beta'|          
+| `GRAPH_API_VERSION`            | **No**   | Default value of graph API Version is 1.0. If you want to fetch data from beta version of graph API, mention value='beta'|     
+| `Fields`            | **No**   | Default fields returned from this package are: 
+id,displayName,givenName,surname,mail,userPrincipalName,onPremisesSamAccountName. For fetching other fields, pass custom fields value comma seprated in functions '|        
 
 ### 3. Usage
 
@@ -43,6 +47,7 @@ Register your application to use Microsoft Graph API using one of the following 
 var GraphAPI = require('ms-graph-function');
 
 // The APPID, MS_GRAPH_SCOPE, APPSECRET and TOKEN_ENDPOINT are usually in a configuration file.
+
 const { result, error } = await GraphAPI.getAccessToken(APPID, MS_GRAPH_SCOPE, APPSECRET, TOKEN_ENDPOINT);
 
 if (!!result) {

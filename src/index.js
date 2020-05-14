@@ -32,11 +32,11 @@ async function getAccessToken(appID, graphScope, clientSecret, tokenEndPoint) {
     }
 }
 //CODE TO GET ALL GROUPS FROM AD GROUP
-async function getAllGroupDetails(accessToken, url = '/groups', apiVersion='v1.0') {
+async function getAllGroupDetails(accessToken, url = '/groups', apiVersion = 'v1.0', fields = 'id,displayName,givenName,surname,mail,userPrincipalName,onPremisesSamAccountName') {
     if (!!accessToken && !!url) {
         try {
             const client = getAuthenticatedClient(accessToken);
-            const groups = await client.api(url).version(apiVersion).get();
+            const groups = await client.api(`${url}?$select=${fields}`).version(apiVersion).get();
             return { groups: groups, errorMessage: null };
         } catch (err) {
             return { groups: null, errorMessage: err.message };
@@ -80,11 +80,11 @@ async function getAllGroupDetails(accessToken, url = '/groups', apiVersion='v1.0
 //     }
 // }
 //CODE TO GET ALL USERS FROM AD GROUP
-async function getAllUserDetails(accessToken, url = '/users', apiVersion='v1.0') {
+async function getAllUserDetails(accessToken, url = '/users', apiVersion = 'v1.0', fields = 'id,displayName,givenName,surname,mail,userPrincipalName,onPremisesSamAccountName') {
     if (!!accessToken && !!url) {
         try {
             const client = getAuthenticatedClient(accessToken);
-            const users = await client.api(url).version(apiVersion).get();
+            const users = await client.api(`${url}?$select=${fields}`).version(apiVersion).get();
             return { users: users, errorMessage: null };
         } catch (err) {
             return { users: null, errorMessage: err.message };
@@ -95,13 +95,13 @@ async function getAllUserDetails(accessToken, url = '/users', apiVersion='v1.0')
 }
 
 //CODE TO GET SPECIFIC USER FROM AD GROUP
-async function getSelectedUserDetails(accessToken, userID, apiVersion='v1.0') {
+async function getSelectedUserDetails(accessToken, userID, apiVersion = 'v1.0', fields = 'id,displayName,givenName,surname,mail,userPrincipalName,onPremisesSamAccountName') {
     if (!!userID && !!accessToken) {
         try {
             const client = getAuthenticatedClient(accessToken);
             const users = userID.split(',');
             const arrayOfPromises = users.map(item => {
-                return client.api(`/users/${item}`).version(apiVersion).get()
+                return client.api(`/users/${item}?$select=${fields}`).version(apiVersion).get()
             })
             return Promise.all(arrayOfPromises).then((result) => {
                 return { user: result, errorMessage: null };
@@ -138,13 +138,13 @@ function getAuthenticatedClient(accessToken) {
 // }
 
 //GET SELECTED GROUP DETAILS
-async function getMembersFromGroup(accessToken, groupId, apiVersion='v1.0') {
+async function getMembersFromGroup(accessToken, groupId, apiVersion = 'v1.0', fields = 'id,displayName,givenName,surname,mail,userPrincipalName,onPremisesSamAccountName') {
     try {
         if (!!groupId && !!accessToken) {
             const client = getAuthenticatedClient(accessToken);
             const groups = groupId.split(',');
             const arrayOfPromises = groups.map(item => {
-                return client.api(`/groups/${item}/transitiveMembers`).version(apiVersion).get()
+                return client.api(`/groups/${item}/transitiveMembers?$select=${fields}`).version(apiVersion).get()
             })
             return Promise.all(arrayOfPromises).then((result) => {
                 const filteredResult = result.reduce((acc, { value }) => [...acc, ...value], [])
