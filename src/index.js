@@ -17,7 +17,7 @@ async function getAccessToken(appID, graphScope, clientSecret, tokenEndPoint) {
         uri: tokenEndPoint,
         form: qs.stringify(postData),
         headers: {
-            'content-type': 'application/x-www-form-urlencoded',  // Is set automatically
+            'content-type': 'application/x-www-form-urlencoded',  // Is set automatically
         },
     };
     try {
